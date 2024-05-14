@@ -16,7 +16,9 @@ export default function Home() {
     results: string[]
     duration: string
   }>()
+  const [isListVisible, setIsListVisible] = useState<boolean>(false)
   const inputRef = useRef<HTMLInputElement>(null)
+  let clickable = false
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,11 +49,16 @@ export default function Home() {
           <Command>
             <CommandInput
               value={input}
-              onValueChange={(e) => setInput(e)}
+              onValueChange={(e) => {
+                setInput(e)
+                setIsListVisible(true)
+              }}
               placeholder="Search countries..."
               className="placehoder:text-zinc-500"
+              onFocus={() => setIsListVisible(true)}
             />
-            <CommandList>
+            {/*{isListVisible && (*/}
+            <CommandList className={isListVisible ? 'block' : 'hidden'}>
               {searchResults?.results?.length === 0 ? (
                 <CommandEmpty>No result found.</CommandEmpty>
               ) : null}
@@ -62,7 +69,10 @@ export default function Home() {
                     <CommandItem
                       key={result}
                       value={result}
-                      onSelect={setInput}
+                      onSelect={(e) => {
+                        setInput(e)
+                        setIsListVisible(false)
+                      }}
                       className="cursor-pointer">
                       {result}
                     </CommandItem>
@@ -70,6 +80,7 @@ export default function Home() {
                 </CommandGroup>
               ) : null}
             </CommandList>
+            {/*)}*/}
           </Command>
         </div>
       </div>
