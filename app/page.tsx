@@ -54,9 +54,11 @@ export default function Home() {
             <CommandList>
               {searchResults?.results?.length === 0 ? (
                 <CommandEmpty>No result found.</CommandEmpty>
-              ) : (
+              ) : null}
+
+              {searchResults?.results ? (
                 <CommandGroup heading="Results">
-                  {searchResults?.results.map((result) => (
+                  {searchResults.results.map((result) => (
                     <CommandItem
                       key={result}
                       value={result}
@@ -66,7 +68,7 @@ export default function Home() {
                     </CommandItem>
                   ))}
                 </CommandGroup>
-              )}
+              ) : null}
             </CommandList>
           </Command>
         </div>
