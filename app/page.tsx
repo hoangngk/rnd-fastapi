@@ -1,6 +1,14 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList
+} from '@/components/ui/command'
 
 export default function Home() {
   const [input, setInput] = useState<string>('')
@@ -14,6 +22,8 @@ export default function Home() {
     const fetchData = async () => {
       if (!input) return setSearchResults(undefined)
       const res = await fetch(`/api/search?q=${input}`)
+      const data = await res.json()
+      setSearchResults(data)
     }
 
     fetchData()
@@ -33,13 +43,33 @@ export default function Home() {
           A high-performance API built with Hono, Next.js and Cloudflare.
           <br /> Type a query blow and get your results in milliseconds.
         </p>
-        <input
-          ref={inputRef}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="px-3 py-2 border border-gray-300 w-1/2 rounded-lg"
-        />
+        <div className="w-1/2">
+          <Command>
+            <CommandInput
+              value={input}
+              onValueChange={(e) => setInput(e)}
+              placeholder="Search countries..."
+              className="placehoder:text-zinc-500"
+            />
+            <CommandList>
+              {searchResults?.results?.length === 0 ? (
+                <CommandEmpty>No result found.</CommandEmpty>
+              ) : (
+                <CommandGroup heading="Results">
+                  {searchResults?.results.map((result) => (
+                    <CommandItem
+                      key={result}
+                      value={result}
+                      onSelect={setInput}
+                      className="cursor-pointer">
+                      {result}
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              )}
+            </CommandList>
+          </Command>
+        </div>
       </div>
     </main>
   )

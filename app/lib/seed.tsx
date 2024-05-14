@@ -264,7 +264,7 @@ countryList.forEach((country) => {
   for (let i = 0; i < term.length; i++) {
     terms.push({ score: 0, member: term.substring(0, i) })
   }
-
+  terms.push({ score: 0, member: term })
   terms.push({ score: 0, member: term + '*' })
 
   const populateDb = async () => {
