@@ -1,0 +1,6 @@
+name = "fast-api"
+compatibility_date = "2024-05-14"
+
+[vars]
+UPSTASH_REDIS_REST_TOKEN = AbCsAAIncDFiOTAyYjViMzhmMjQ0NmI0YjhlNGIwNTY1MmI1OTJmZHAxNDUyMjg
+UPSTASH_REDIS_REST_URL = https://in-sparrow-45228.upstash.io
